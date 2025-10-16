@@ -41,6 +41,7 @@
         <button id="btn-frase">Dammi una frase</button>
         <button id="btn-colore">Cambia colore</button>
         <button id="btn-orario">Che ore sono?</button>
+        <button id="btn-animazione">Silly animazione</button>
       </div>
     </div>
 
@@ -65,6 +66,7 @@
       const $btnFrase = document.getElementById('btn-frase');
       const $btnColore = document.getElementById('btn-colore');
       const $btnOrario = document.getElementById('btn-orario');
+      const $btnAnimazione = document.getElementById('btn-animazione');
 
       function randomFrase() {
         const i = Math.floor(Math.random()*frasi.length);
@@ -82,9 +84,14 @@
         $frase.textContent = "Ora locale: " + now.toLocaleString();
       }
 
+      function goToAnimation(){
+        
+      }
+
       $btnFrase.addEventListener('click', randomFrase);
       $btnColore.addEventListener('click', randomColor);
       $btnOrario.addEventListener('click', showTime);
+      $btnAnimazione.addEventListener('click', goToAnimation);
 
       // Easter egg: cambia frase al caricamento
       randomFrase();
