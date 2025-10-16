@@ -41,7 +41,7 @@
         <button id="btn-frase">Dammi una frase</button>
         <button id="btn-colore">Cambia colore</button>
         <button id="btn-orario">Che ore sono?</button>
-        <button id="btn-animazione">Silly animazione</button>
+        <button id="btn-animazione" onclick="goToAnimation">Silly animazione</button>
       </div>
     </div>
 
@@ -83,9 +83,9 @@
         const now = new Date();
         $frase.textContent = "Ora locale: " + now.toLocaleString();
       }
-
+      
       function goToAnimation(){
-        
+        window.location.href = 'animazione.html'
       }
 
       $btnFrase.addEventListener('click', randomFrase);
