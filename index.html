@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sito Scemo™</title>
+    <style>
+      :root { --bg:#0f172a; --fg:#e2e8f0; --acc:#22d3ee; }
+      html,body { height:100%; margin:0; }
+      body {
+        display:flex; align-items:center; justify-content:center; flex-direction:column;
+        gap:20px; background:radial-gradient(1200px 600px at 50% 10%, #1e293b, #0f172a);
+        color:var(--fg); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      }
+      h1 { margin:0; font-size: clamp(28px, 6vw, 56px); text-align:center; }
+      p { margin:0; opacity:0.9; text-align:center; }
+      .card {
+        background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08);
+        border-radius:16px; padding:24px; max-width:720px; box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      }
+      .btns { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; }
+      button {
+        background: var(--acc); color:#081217; border:0; padding:12px 16px; border-radius:10px;
+        cursor:pointer; font-weight:700; transition: transform .06s ease, filter .2s ease;
+      }
+      button:hover { transform: translateY(-2px); filter: brightness(1.05); }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+      footer { position:fixed; bottom:10px; font-size:12px; opacity:0.7; }
+      a { color: var(--acc); text-decoration: none; }
+      a:hover { text-decoration: underline; }
+    </style>
+    <meta property="og:title" content="Sito Scemo™">
+    <meta property="og:description" content="Una pagina inutile per testare GitHub Pages.">
+    <meta property="og:type" content="website">
+  </head>
+  <body>
+    <h1>Benvenuto nel Sito Scemo™</h1>
+    <div class="card">
+      <p id="frase">Clicca il bottone per una perla di saggezza casuale.</p>
+      <div class="btns">
+        <button id="btn-frase">Dammi una frase</button>
+        <button id="btn-colore">Cambia colore</button>
+        <button id="btn-orario">Che ore sono?</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <p>Questo è un sito statico: solo HTML, CSS e JavaScript consegnati così come sono, senza backend o database [web:23][web:24].</p>
+      <p class="mono">/static FTW → veloce, semplice, sicuro (per demo e landing) [web:22][web:27].</p>
+    </div>
+
+    <footer>
+      Fatto per testare GitHub Pages • HTTPS e URL pubblico inclusi nei servizi di hosting statico simili [web:10][web:13].
+    </footer>
+
+    <script>
+      const frasi = [
+        "La vita è breve: minifica il CSS.",
+        "Se funziona, non toccarlo.",
+        "Console.log è il vero debugger.",
+        "Il miglior bug è quello che non scrivi.",
+        "Nessun backend? Nessun problema!"
+      ];
+      const $frase = document.getElementById('frase');
+      const $btnFrase = document.getElementById('btn-frase');
+      const $btnColore = document.getElementById('btn-colore');
+      const $btnOrario = document.getElementById('btn-orario');
+
+      function randomFrase() {
+        const i = Math.floor(Math.random()*frasi.length);
+        $frase.textContent = frasi[i];
+      }
+
+      function randomColor() {
+        const h = Math.floor(Math.random()*360);
+        const s = 70, l = 50;
+        document.documentElement.style.setProperty('--acc', `hsl(${h} ${s}% ${l}%)`);
+      }
+
+      function showTime() {
+        const now = new Date();
+        $frase.textContent = "Ora locale: " + now.toLocaleString();
+      }
+
+      $btnFrase.addEventListener('click', randomFrase);
+      $btnColore.addEventListener('click', randomColor);
+      $btnOrario.addEventListener('click', showTime);
+
+      // Easter egg: cambia frase al caricamento
+      randomFrase();
+    </script>
+  </body>
+</html>
