@@ -1,0 +1,228 @@
+/* Reset e base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html, body {
+  margin: 0;
+  height: 100%;
+  background: #020036;
+  color: #0f0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  overflow: hidden; /* previene scroll accidentale */
+}
+
+/* Variabili */
+:root {
+  --edge-thickness: 28px; /* spessore lato */
+  --edge-gap: 16px;       /* padding tra cornice e viewport */
+  --speed: 30s;           /* velocità scorrimento */
+}
+
+/* Area cornice intera, rientrata dal bordo */
+.frame {
+  position: fixed;
+  inset: var(--edge-gap); /* padding dal viewport */
+  pointer-events: none;   /* non blocca interazioni del contenuto */
+}
+
+/* Lati base */
+.edge {
+  position: absolute;
+  color: #0f0;
+  white-space: nowrap;
+  overflow: hidden;
+  background: transparent;
+  text-shadow: 0 0 6px rgba(0,255,0,0.45);
+}
+
+/* Orizzontali */
+.edge-top,
+.edge-bottom {
+  left: 0;
+  width: calc(100vw - 2 * var(--edge-gap));
+  height: var(--edge-thickness);
+}
+.edge-top {
+  top: 0;
+  border-bottom: 2px solid rgba(0,255,0,0.35);
+  box-shadow: inset 0 -3px 0 rgba(0,255,0,0.15);
+}
+.edge-bottom {
+  bottom: 0;
+  border-top: 2px solid rgba(0,255,0,0.35);
+  box-shadow: inset 0 3px 0 rgba(0,255,0,0.15);
+}
+
+/* Verticali */
+.edge-left,
+.edge-right {
+  top: 0;
+  height: calc(100vh - 2 * var(--edge-gap));
+  width: var(--edge-thickness);
+}
+.edge-left {
+  left: 0;
+  border-right: 2px solid rgba(0,255,0,0.35);
+  box-shadow: inset -3px 0 0 rgba(0,255,0,0.15);
+}
+.edge-right {
+  right: 0;
+  border-left: 2px solid rgba(0,255,0,0.35);
+  box-shadow: inset 3px 0 0 rgba(0,255,0,0.15);
+}
+
+/* Tracce e bande */
+.track {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  will-change: transform;
+  transform: translate3d(0,0,0);
+}
+.track.vertical {
+  flex-direction: column;
+  justify-content: center;
+}
+
+.band {
+  display: inline-block;
+  padding-inline: 16px;
+  color: #0f0;
+  opacity: 0.95;
+}
+
+/* Marquee continuo con due bande identiche */
+.edge-top .track { animation: marquee-left var(--speed) linear infinite; }
+.edge-bottom .track { animation: marquee-right var(--speed) linear infinite; }
+.edge-left .track { animation: marquee-up var(--speed) linear infinite; }
+.edge-right .track { animation: marquee-down var(--speed) linear infinite; }
+
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); } /* due bande -> -50% ciclo */
+}
+@keyframes marquee-right {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+@keyframes marquee-up {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-50%); }
+}
+@keyframes marquee-down {
+  from { transform: translateY(-50%); }
+  to   { transform: translateY(0); }
+}
+
+/* Contenuto centrale */
+.content {
+  position: relative;
+  z-index: 0;
+  min-height: 100vh;
+  display: grid;
+  /*place-items: center;*/
+  text-align: center;
+  padding: 1vh;
+  overflow-wrap: anywhere;
+}
+
+/* Riduzione movimento */
+@media (prefers-reduced-motion: reduce){
+  .edge-top .track,
+  .edge-bottom .track,
+  .edge-left .track,
+  .edge-right .track {
+    animation-duration: 120s; /* rallenta molto */
+  }
+}
+
+.title {
+  padding: 3vh;
+}
+
+.translate {
+  transform: translate(0px, -5vh);
+}
+
+.translateMore {
+  transform: translate(0px, -8vh);
+}
+
+button {
+  box-sizing: border-box;
+  appearance: none;
+  background-color: transparent;
+  border: 2px solid red;
+  border-radius: 0.6em;
+  color: red;
+  cursor: pointer;
+  display: flex;
+  align-self: center;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1;
+  margin: 20px;
+  padding: 1.2em 2.8em;
+  text-decoration: none;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  box-sizing: border-box;
+  appearance: none;
+  background-color: transparent;
+  border: 2px solid red;
+  border-radius: 0.6em;
+  color: red;
+  cursor: pointer;
+  display: flex;
+  align-self: center;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1;
+  margin: 20px;
+  padding: 1.2em 1.4em;
+  text-decoration: none;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  /* background: $yellow; */
+  border-color: #0f0;
+  color: #fff;
+
+  &:hover,
+  &:focus {
+    color: #fff;
+    outline: 0;
+  }
+}
+
+.flex-btn{
+  display: flex;
+  text-align: center;
+  justify-content: space-between;
+}
+
+.text-center{
+  justify-content: center;
+}
+
+#backButton {
+  position: fixed;      
+  left: 2vh;          
+  top: 15vh;         
+}
+
+.button-lessWords {
+  padding: 1.2em 2.8em;
+}
+
+.alreadyAnswered {
+  background-color: #0f0;
+  color: #020036;
+}

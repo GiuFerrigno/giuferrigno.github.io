@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="it">
+
+<head>
+  <meta charset="utf-8">
+  <title>WYBMB</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+
+<body>
+  <!-- Cornice -->
+  <div class="frame" aria-hidden="false" aria-label="Cornice animata">
+    <!-- Top -->
+    <div class="edge edge-top">
+      <div class="track">
+        <span class="band" data-phrase="01010101010 • 111010010100 • 0101000010101 • 101010101010 • "></span>
+        <span class="band" data-phrase="01010101010 • 111010010100 • 0101000010101 • 101010101010 • "></span>
+      </div>
+    </div>
+    <!-- Bottom -->
+    <div class="edge edge-bottom">
+      <div class="track">
+        <span class="band" data-phrase="01010101010 • 111010010100 • 0101000010101 • 101010101010 • "></span>
+        <span class="band" data-phrase="01010101010 • 111010010100 • 0101000010101 • 101010101010 • "></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenuto pagina -->
+  <main class="content">
+    <h1 class="title">WYBMB</h1>
+    <div class="translate">
+      <p id="question">Domanda domandosa</p>
+      <div id="buttons" class="flex-btn">
+        <button id="answer1" data-key="1">?</button>
+        <button id="answer2" data-key="2">?</button>
+      </div>
+
+      <!--
+      <span data-counter>0</span>
+      -->
+    </div>
+
+    
+  </main>
+
+  <script>
+    // Mappa contenuti per le chiavi
+    const contentMap = {
+      '1': {
+        question: "Qual è il colore preferito di Giulia?",
+        answer1: "Giallo",
+        answer2: "Verde",
+        correctAnswer: "Verde"
+      },
+      '2': {
+        question: "Qual è il cibo preferito di Giulia?",
+        answer1: "Patate",
+        answer2: "Pizza",
+        correctAnswer: "Patate"
+      },
+      '3': {
+        question: "Puoi mettere solo un ingrediente sulla pizza di Giulia, cosa preferirebbe?",
+        answer1: "Patatine fritte",
+        answer2: "Wurstel",
+        correctAnswer: "Patatine fritte"
+      },
+      '4': {
+        question: "Giulia preferirebbe avere un gatto arancione o un beagle?",
+        answer1: "Beagle",
+        answer2: "Gatto arancione",
+        correctAnswer: "Gatto arancione"
+      },
+      '5': {
+        question: "Quale sarà il nuovo hobby di Giulia?",
+        answer1: "Fare l'uncinetto",
+        answer2: "Cantare",
+        correctAnswer: "Fare l'uncinetto"
+      }
+    };
+
+    function getKeyFromHash() {
+      // location.hash: es. "#key=3" => rimuovi "#", poi parsifica come query string
+      const params = new URLSearchParams(location.hash.slice(1));
+      return params.get('key');
+    }
+
+    function renderByKey(key) {
+      const data = contentMap[key];
+
+      const questionEl = document.getElementById("question");
+      const answer1El = document.getElementById("answer1");
+      const answer2El = document.getElementById("answer2");
+
+      questionEl.textContent = data.question;
+      answer1El.textContent = data.answer1;
+      answer2El.textContent = data.answer2;
+
+      // Migliora accessibilità: porta il focus al titolo per annunciare il cambiamento
+      // utile soprattutto quando si cambia solo l’hash senza ricaricare
+      //requestAnimationFrame(() => titleEl.focus());
+      // Aggiorna anche il titolo della pagina
+      //document.title = `Pagina 2 — ${data.title}`;
+    }
+
+    // Inizializzazione all’apertura della pagina
+    function init() {
+      const key = getKeyFromHash() || '1'; // fallback a '1' se non c'è chiave
+      renderByKey(key);
+    }
+
+    // Reagisci ai cambi di hash senza ricaricare
+    window.addEventListener('hashchange', () => {
+      const key = getKeyFromHash();
+      renderByKey(key);
+    });
+
+    // Avvio
+    init();
+
+    document.getElementById('buttons').addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-key]');
+      const key = btn.dataset.key;
+
+      const keyPage = getKeyFromHash() || '1'; 
+      const data = contentMap[keyPage];
+
+      console.log(btn.textContent);
+      console.log(data.correctAnswer);
+
+      if(btn.textContent === data.correctAnswer){
+        //Risposta corretta
+        //incrementCorrectCounter();
+        pushCorrectValue(keyPage);
+        window.location.href=`game.html`;
+      }
+      else{
+        //Risposta errata
+        alert("Sul serio???");
+      }
+
+    });
+  </script>
+</body>
+
+</html>
