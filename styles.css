@@ -227,3 +227,7 @@ button {
   background-color: #0f0;
   color: #020036;
 }
+
+.button-game {
+  width: 80%;
+}
