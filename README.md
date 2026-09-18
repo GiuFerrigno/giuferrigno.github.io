@@ -1,3 +1,3 @@
-## Personal page
+## Personal website
 
-Work in progress
+Deployed with GitHub Pages
